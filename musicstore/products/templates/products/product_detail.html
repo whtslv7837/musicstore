@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+    <p>Цена: {{ product.price }} руб.</p>
+    <p>На складе: {{ product.stock_quantity }}</p>
+    <a href="/">Назад к списку товаров</a>
+    <a href="{% url 'add_to_cart' product.id %}">Добавить в корзину</a>
+</body>
+</html>

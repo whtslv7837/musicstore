@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оформление заказа</title>
+</head>
+<body>
+    <h1>Оформление заказа</h1>
+
+    <p>Ваша корзина:</p>
+    <ul>
+        {% for item in cart.cart_items.all %}
+            <li>{{ item.product.name }} - {{ item.quantity }} шт. - {{ item.total_price }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Общая сумма: {{ cart.total_price }}</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Подтвердить заказ</button>
+    </form>
+</body>
+</html>
