@@ -8,6 +8,12 @@
     <p>{{ product.description }}</p>
     <p>Цена: {{ product.price }} руб.</p>
     <p>На складе: {{ product.stock_quantity }}</p>
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% else %}
+        <p>Изображение отсутствует</p>
+    {% endif %}
+
     <a href="/">Назад к списку товаров</a>
     <a href="{% url 'add_to_cart' product.id %}">Добавить в корзину</a>
 </body>

@@ -7,8 +7,8 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Автоматически авторизуем пользователя
-            return redirect('product_list')  # Перенаправление на список товаров
+            login(request, user)
+            return redirect('product_list')
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})

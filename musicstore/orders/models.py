@@ -7,15 +7,29 @@ import datetime
 
 class Order(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Ожидает обработки'),
+        ('pending', 'Ожидается'),
         ('completed', 'Завершен'),
-        ('canceled', 'Отменен'),
+        ('cancelled', 'Отменен'),
     ]
     user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if self.pk:  # Если объект уже существует
+            original = Order.objects.get(pk=self.pk)
+            if original.status != 'cancelled' and self.status == 'cancelled':
+                # Если статус изменился на "отменен"
+                self.return_stock()
+
+        super().save(*args, **kwargs)
+
+    def return_stock(self):
+        for item in self.orderitem_set.all():  # Получаем все товары в заказе
+            item.product.stock_quantity += item.quantity
+            item.product.save()
 
     def __str__(self):
         return f"Заказ #{self.id} от {self.created_at}"
