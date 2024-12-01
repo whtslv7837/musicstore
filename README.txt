@@ -1,7 +1,9 @@
 это сайт по дыле
 
 сначала нужно установить все зависимости командой
-<code>pip install -r requirements.txt</code>
+```terminal
+pip install -r requirements.txt
+```
 
 далее настроить бд, все команды в файле creatingDB.txt
 
@@ -10,9 +12,15 @@
 
 далее используем команду
 для линукса и мака:
-<code>python3 manage.py runserver</code>
+```terminal
+python3 manage.py runserver
+```
 для винды:
-<code>python manage.py runserver</code>
+```terminal
+python manage.py runserver
+```
 
 далее в браузере заходим на локальный сервер
-<code>http://127.0.0.1:8000/</code>
+```url
+http://127.0.0.1:8000/
+```
