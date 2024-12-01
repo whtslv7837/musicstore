@@ -1,0 +1,6 @@
+CREATE DATABASE musicstore;
+CREATE USER musicstore_user WITH PASSWORD 'admin1';
+GRANT ALL PRIVILEGES ON DATABASE musicstore TO musicstore_user;
+ALTER DATABASE musicstore SET client_encoding TO 'UTF8';
+ALTER DATABASE musicstore SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON SCHEMA public TO musicstore_user;
