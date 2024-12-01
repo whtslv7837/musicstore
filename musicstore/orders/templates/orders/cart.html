@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Корзина</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+
+{% block title %} Корзина {% endblock %}
+
+{% block content %}
     <h1>Ваша корзина</h1>
     {% if cart.cart_items.count > 0 %}
         <ul>
@@ -19,5 +18,4 @@
     {% else %}
         <p>Ваша корзина пуста.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

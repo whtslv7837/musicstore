@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Недостаточно товара</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+
+{% block title %} Недостаточно товара {% endblock %}
+
+{% block content %}
     <h1>Извините, на складе недостаточно товара: {{ product.name }}.</h1>
     <p>Пожалуйста, уменьшите количество или выберите другой товар.</p>
     <a href="{% url 'cart' %}">Вернуться в корзину</a>
-</body>
-</html>
+{% endblock %}

@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Список товаров</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+
+{% block title %} Товары {% endblock %}
+
+{% block content %}
     <h1>Список товаров</h1>
     <ul>
         {% for product in products %}
@@ -12,5 +11,4 @@
             </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}
