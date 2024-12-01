@@ -5,7 +5,6 @@ from .forms import OrderForm
 from products.models import Product
 from django.contrib.auth.decorators import login_required
 
-
 @login_required
 def create_order(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -13,24 +12,27 @@ def create_order(request):
     if cart.cart_items.count() == 0:
         return redirect('cart')  # Если корзина пуста, перенаправляем на страницу корзины
 
+    # Вычисляем общую сумму заказа
+    total_amount = cart.total_price()
+
     # Обработка формы заказа
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
-            order.user = request.user
-            order.total_amount = cart.total_price()  # Общая сумма заказа
-            order.save()
+            order.user = request.user  # Назначаем текущего авторизованного пользователя
+            order.total_amount = total_amount  # Устанавливаем вычисленную сумму
+            order.save()  # Сохраняем заказ, чтобы получить primary key
 
             # Переносим товары из корзины в заказ и обновляем количество на складе
             for cart_item in cart.cart_items.all():
                 if cart_item.product.quantity < cart_item.quantity:
                     # Если товара не хватает на складе
-                    return render(request, 'orders/insufficient_stock.html', {'product': cart_item.product})
+                    return redirect('insufficient_stock', product_id=cart_item.product.id)
 
                 # Создаем запись о товаре в заказе
                 OrderItem.objects.create(
-                    order=order,
+                    order=order,  # Устанавливаем связь с заказом
                     product=cart_item.product,
                     quantity=cart_item.quantity,
                     price=cart_item.product.price
@@ -44,13 +46,15 @@ def create_order(request):
             cart.cart_items.all().delete()
 
             return redirect('order_success')  # Перенаправление на страницу успешного оформления заказа
-
+        else:
+            return render(request, 'orders/create_order.html', {'form': form, 'cart': cart, 'total_amount': total_amount, 'errors': form.errors})
     else:
         form = OrderForm()
 
-    return render(request, 'orders/create_order.html', {'form': form, 'cart': cart})
+    return render(request, 'orders/create_order.html', {'form': form, 'cart': cart, 'total_amount': total_amount})
 
-def insufficient_stock(request, product):
+def insufficient_stock(request, product_id):
+    product = Product.objects.get(id=product_id)  # Получаем товар по его ID
     return render(request, 'orders/insufficient_stock.html', {'product': product})
 
 def order_success(request):

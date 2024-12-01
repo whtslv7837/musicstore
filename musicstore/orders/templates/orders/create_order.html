@@ -14,7 +14,7 @@
         {% endfor %}
     </ul>
 
-    <h3>Общая сумма: {{ cart.total_price }}</h3>
+    <h3>Общая сумма: {{ total_amount }}</h3>
 
     <form method="POST">
         {% csrf_token %}

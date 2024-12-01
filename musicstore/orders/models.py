@@ -1,9 +1,6 @@
-from itertools import product
 from django.db import models
 from django.contrib.auth.models import User
 from products.models import Product
-import datetime
-
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -18,24 +15,36 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        if self.pk:  # Если объект уже существует
+        if not self.pk:  # Если объект новый
+            super().save(*args, **kwargs)  # Сначала сохраняем заказ, чтобы получить pk
+            self.deduct_stock()  # После того как заказ сохранен, можно вычесть товар со склада
+        elif self.pk:  # Если объект существует
             original = Order.objects.get(pk=self.pk)
             if original.status != 'cancelled' and self.status == 'cancelled':
-                # Если статус изменился на "отменен"
+                # Возврат товара на склад при отмене заказа
                 self.return_stock()
+            elif original.status == 'cancelled' and self.status != 'cancelled':
+                # Вычитание товара со склада, если статус изменился с "Отменен" обратно
+                self.deduct_stock()
 
         super().save(*args, **kwargs)
 
+    def deduct_stock(self):
+        """Метод для вычитания товара со склада при создании заказа"""
+        for item in self.order_items.all():
+            if item.product.quantity < item.quantity:
+                raise ValueError(f"Недостаточно товара {item.product.name} на складе!")
+            item.product.quantity -= item.quantity
+            item.product.save()
+
     def return_stock(self):
-        for item in self.orderitem_set.all():  # Получаем все товары в заказе
-            item.product.stock_quantity += item.quantity
+        """Метод для возврата товара на склад при отмене заказа"""
+        for item in self.order_items.all():
+            item.product.quantity += item.quantity
             item.product.save()
 
     def __str__(self):
         return f"Заказ #{self.id} от {self.created_at}"
-
-    def get_items(self):
-        return self.order_items.all()
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
@@ -58,7 +67,6 @@ class Cart(models.Model):
 
     def total_items(self):
         return sum(item.quantity for item in self.cart_items.all())
-
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE)

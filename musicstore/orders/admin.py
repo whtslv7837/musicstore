@@ -8,7 +8,13 @@ class OrderAdmin(admin.ModelAdmin):
     actions = ['mark_as_cancelled']
 
     def mark_as_cancelled(self, request, queryset):
+        # Обновляем статус на "Отменен"
         queryset.update(status='cancelled')
+
+        # Для каждого заказа в queryset вызываем return_stock()
+        for order in queryset:
+            order.return_stock()
+
     mark_as_cancelled.short_description = "Отменить выбранные заказы"
 
 admin.site.register(OrderItem)
