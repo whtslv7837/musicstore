@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Регистрация</title>
-</head>
-<body>
-    <h1>Регистрация</h1>
-    <form method="post">
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+    <h2 class="logfrm-h2">Регистрация</h2>
+    <form method="post" class="logfrm">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.username.label_tag }} {{ form.username }}
+        {{ form.password1.label_tag }} {{ form.password1 }}
+        {{ form.password2.label_tag }} {{ form.password2 }}
         <button type="submit">Зарегистрироваться</button>
     </form>
-    <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
-</body>
-</html>
+
+{% endblock %}

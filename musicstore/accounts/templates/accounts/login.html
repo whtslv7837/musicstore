@@ -1,9 +1,10 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-  <h2>Вход</h2>
 
-  <form method="post">
+  <h2 class="logfrm-h2">Вход</h2>
+
+  <form class="logfrm" method="post">
     {% csrf_token %}
 
     {{ form.as_p }}
@@ -11,5 +12,4 @@
     <button type="submit">Войти</button>
   </form>
 
-  <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
 {% endblock %}

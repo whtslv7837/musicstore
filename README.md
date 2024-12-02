@@ -1,5 +1,8 @@
 # это сайт по дыле
 
+Я решил ввести патчноуты для тех, кто будет следить, 
+уведомлять ли о патчах в тг? отпишитесь пж
+
 сначала нужно установить все зависимости командой
 ```terminal
 pip install -r requirements.txt
@@ -8,16 +11,32 @@ pip install -r requirements.txt
 ## далее настроить бд ##
 все команды в файле [creatingDB.txt](https://github.com/whtslv7837/musicstore/blob/master/creatingDB.txt)
 
-чтобы открыть сайт нужно запустить его на локальном сервере, все действия в джанго производятся через файл manage.py
-в консоли переходим в директорию с фалом manage.py или пкм по папке и open in > terminal
+чтобы открыть сайт нужно запустить его на локальном сервере, все действия в джанго производятся через файл manage.py<br>
+в консоли переходим в директорию с фалом manage.py<br> или <br>пкм по папке и open in > terminal
 
-## далее используем команду ##
+## далее используем команды ##
 для линукса и мака:
 ```terminal
+python3 manage.py makemigrations
+```
+
+```
+python3 manage.py migrate
+```
+
+```
 python3 manage.py runserver
 ```
 для винды:
 ```terminal
+python manage.py makemigrations
+```
+
+```
+python manage.py migrate
+```
+
+```
 python manage.py runserver
 ```
 
@@ -45,6 +64,7 @@ python3 manage.py createsuperuser
 Тут я расскажу че по чем вкратце<br>
 Сайт состоит из отдельных модулей, в джанго они называются приложениями:<br>
 <ul>
+    <li>main</li>
     <li>accounts</li>
     <li>orders</li>
     <li>products</li>

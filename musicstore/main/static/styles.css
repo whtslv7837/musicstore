@@ -1,10 +1,82 @@
-body{
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    font-size: 30px;
 }
 
-
-main{
-
+/* Контейнер страницы */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
+
+/* Основное содержимое */
+main {
+    flex: 1;
+    margin: 0 1rem;
+}
+
+/* Футер */
+footer {
+    background-color: #0d6dfd;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+/* Хедер */
+header {
+    font-size: 20px;
+}
+
+header li {
+    margin-left: 1rem;
+    width: auto;
+}
+
+/* Стили для формы */
+.logfrm , .regfrm {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 2px 4px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logfrm-h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 5rem;
+}
+
+.logfrm label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.logfrm input[type="text"],
+.logfrm input[type="password"],
+.logfrm input[type="email"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 13px;
+    border: 1px solid #c0c0c0;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.logfrm button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    border-radius: 13px;
+}
+
