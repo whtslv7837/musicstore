@@ -17,13 +17,18 @@ main {
     margin: 0 1rem;
 }
 
+main h1{
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
 /* Футер */
 footer {
     background-color: #0d6dfd;
     color: white;
     text-align: center;
     padding: 1rem;
-    margin-top: auto;
+    margin-top: 2rem;;
 }
 
 /* Хедер */
@@ -136,4 +141,9 @@ header li {
 
 .product_item .btn:hover {
     background-color: #0044cc;
+}
+
+/* Детали товара */
+.details {
+
 }
