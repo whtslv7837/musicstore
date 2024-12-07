@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Заказ №{{ order.id }} {% endblock %}
+
+{% block content %}
+<div class="order-details">
+    <h1>Детали заказа</h1>
+    <p><strong>Номер заказа:</strong> {{ order.id }}</p>
+    <p><strong>Пользователь:</strong> {{ order.user.username }}</p>
+    <p><strong>Сумма заказа:</strong> {{ order.total_amount }} руб.</p>
+    <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Дата создания:</strong> {{ order.created_at }}</p>
+
+    {% if order.qr_code %}
+        <h3>Ваш QR-код</h3>
+        <img src="{{ order.qr_code.url }}" alt="QR-код заказа {{ order.id }}">
+    {% else %}
+        <p>QR-код еще не создан.</p>
+    {% endif %}
+
+    <a href="{% url 'order_list' %}" class="btn btn-primary">Вернуться к списку заказов</a>
+</div>
+{% endblock %}

@@ -7,5 +7,7 @@ urlpatterns = [
     path('cart/', views.view_cart, name='cart'),
     path('create_order/', views.create_order, name='create_order'),
     path('order_success/', views.order_success, name='order_success'),
+    path('orders/', views.order_list, name='order_list'),
+    path('orders/<int:order_id>/', views.order_details, name='order_details'),  # Для деталей заказа
     path('insufficient_stock/', views.insufficient_stock, name='insufficient_stock'),
 ]

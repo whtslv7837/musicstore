@@ -3,6 +3,7 @@
 {% block title %} Оформление заказа {% endblock %}
 
 {% block content %}
+<div class="create_order">
     <h1>Оформление заказа</h1>
 
     <p>Ваша корзина:</p>
@@ -16,7 +17,7 @@
 
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
         <button type="submit">Подтвердить заказ</button>
     </form>
+</div>
 {% endblock %}

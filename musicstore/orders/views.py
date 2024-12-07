@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .models import Order, OrderItem, Cart, CartItem
 from .forms import OrderForm
 from products.models import Product
@@ -10,7 +9,7 @@ def create_order(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
 
     if cart.cart_items.count() == 0:
-        return redirect('cart')  # Если корзина пуста, перенаправляем на страницу корзины
+        return redirect('cart')
 
     # Вычисляем общую сумму заказа
     total_amount = cart.total_price()
@@ -20,9 +19,9 @@ def create_order(request):
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
-            order.user = request.user  # Назначаем текущего авторизованного пользователя
-            order.total_amount = total_amount  # Устанавливаем вычисленную сумму
-            order.save()  # Сохраняем заказ, чтобы получить primary key
+            order.user = request.user
+            order.total_amount = total_amount
+            order.save()
 
             # Переносим товары из корзины в заказ и обновляем количество на складе
             for cart_item in cart.cart_items.all():
@@ -32,7 +31,7 @@ def create_order(request):
 
                 # Создаем запись о товаре в заказе
                 OrderItem.objects.create(
-                    order=order,  # Устанавливаем связь с заказом
+                    order=order,
                     product=cart_item.product,
                     quantity=cart_item.quantity,
                     price=cart_item.product.price
@@ -45,7 +44,7 @@ def create_order(request):
             # Очищаем корзину после оформления заказа
             cart.cart_items.all().delete()
 
-            return redirect('order_success')  # Перенаправление на страницу успешного оформления заказа
+            return redirect('order_success')
         else:
             return render(request, 'orders/create_order.html', {'form': form, 'cart': cart, 'total_amount': total_amount, 'errors': form.errors})
     else:
@@ -74,7 +73,7 @@ def add_to_cart(request, product_id):
         cart_item.quantity += 1
         cart_item.save()
 
-    return redirect('cart')  # Перенаправляем на страницу корзины
+    return redirect('cart')
 
 @login_required
 def remove_from_cart(request, item_id):
@@ -86,3 +85,27 @@ def remove_from_cart(request, item_id):
 def view_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     return render(request, 'orders/cart.html', {'cart': cart})
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Order
+
+def order_details(request, order_id):
+    """
+    Вьюха для отображения деталей заказа.
+    """
+    order = get_object_or_404(Order, id=order_id)
+
+    return render(request, 'orders/order_details.html', {
+        'order': order,
+    })
+
+@login_required
+def order_list(request):
+    """
+    Вьюха для отображения списка заказов текущего пользователя.
+    """
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'orders/order_list.html', {
+        'orders': orders,
+    })

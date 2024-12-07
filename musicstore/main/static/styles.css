@@ -145,5 +145,280 @@ header li {
 
 /* Детали товара */
 .details {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
 
+.details h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.details p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.details p:nth-child(3),
+.details p:nth-child(4) {
+    font-weight: bold;
+    color: #000;
+}
+
+.details img {
+    display: block;
+    max-width: 500px;
+    height: auto;
+    margin: auto auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.details a {
+    display: inline-block;
+    margin: 10px 5px 0 0;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #fff;
+    background-color: #0d6efd;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.details a:hover {
+    background-color: #0044cc;
+}
+
+.details a:first-child {
+    background-color: #6c757d;
+}
+
+.details a:first-child:hover {
+    background-color: #4b4f56;
+}
+
+.cart {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.cart h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.cart ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cart li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart li span {
+    font-weight: bold;
+    color: #333;
+}
+
+.cart li a {
+    text-decoration: none;
+    color: #dc3545;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.cart li a:hover {
+    color: #a71d2a;
+}
+
+.cart p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    text-align: right;
+}
+
+.cart a.create-order {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0d6efd;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.cart a.create-order:hover {
+    background-color: #0044cc;
+}
+
+.cart .empty-cart {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Контейнер для страницы оформления заказа */
+.create_order {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.create_order h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Список товаров в корзине */
+.create_order ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.create_order li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.create_order h3 {
+    font-size: 1.5rem;
+    color: #000;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.create_order form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.create_order form label {
+    font-weight: bold;
+}
+
+.create_order form input,
+.create_order form select,
+.create_order form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.create_order form button {
+    padding: 10px 20px;
+    background-color: #0d6efd;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create_order form button:hover {
+    background-color: #0044cc;
+}
+
+/* Контейнер для деталей заказа */
+.order-details {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.order-details h1 {
+    text-align: center;
+    color: #0d6efd;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.order-details p {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.order-details strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.order-details img {
+    display: block;
+    max-width: 200px;
+    margin: 1rem auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.order-details a.btn {
+    display: block;
+    max-width: 200px;
+    text-align: center;
+    margin: 2rem auto 0;
+    padding: 0.5rem 1rem;
+    background-color: #0d6efd;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.order-details a.btn:hover {
+    background-color: #084298;
 }

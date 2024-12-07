@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from products.models import Product
+from .utils import generate_qr_code
+from django.core.files.base import ContentFile
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -13,24 +15,30 @@ class Order(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # Если объект новый
-            super().save(*args, **kwargs)  # Сначала сохраняем заказ, чтобы получить pk
-            self.deduct_stock()  # После того как заказ сохранен, можно вычесть товар со склада
-        elif self.pk:  # Если объект существует
+        if not self.pk:  # Новый объект
+            super().save(*args, **kwargs)
+            self.generate_qr_code()  # Генерация QR-кода
+        elif self.pk:  # Существующий объект
             original = Order.objects.get(pk=self.pk)
             if original.status != 'cancelled' and self.status == 'cancelled':
-                # Возврат товара на склад при отмене заказа
-                self.return_stock()
+                self.return_stock()  # Возврат товара
             elif original.status == 'cancelled' and self.status != 'cancelled':
-                # Вычитание товара со склада, если статус изменился с "Отменен" обратно
-                self.deduct_stock()
+                self.deduct_stock()  # Вычитание товара
 
         super().save(*args, **kwargs)
 
+    def generate_qr_code(self):
+        """Генерирует QR-код для заказа и сохраняет его в поле qr_code"""
+        qr_data = f"Заказ №{self.id}\nСумма: {self.total_amount} руб."
+        qr_image = generate_qr_code(qr_data)
+        qr_filename = f"order_{self.id}.png"
+        self.qr_code.save(qr_filename, ContentFile(qr_image), save=False)
+
     def deduct_stock(self):
-        """Метод для вычитания товара со склада при создании заказа"""
+        """Вычитание товара со склада"""
         for item in self.order_items.all():
             if item.product.quantity < item.quantity:
                 raise ValueError(f"Недостаточно товара {item.product.name} на складе!")
@@ -38,7 +46,7 @@ class Order(models.Model):
             item.product.save()
 
     def return_stock(self):
-        """Метод для возврата товара на склад при отмене заказа"""
+        """Возврат товара на склад"""
         for item in self.order_items.all():
             item.product.quantity += item.quantity
             item.product.save()

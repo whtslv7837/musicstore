@@ -3,6 +3,7 @@
 {% block title %} Корзина {% endblock %}
 
 {% block content %}
+<div class="cart">
     <h1>Ваша корзина</h1>
     {% if cart.cart_items.count > 0 %}
         <ul>
@@ -14,8 +15,9 @@
         {% endfor %}
         </ul>
         <p>Общая стоимость: {{ cart.total_price }}</p>
-        <p><a href="{% url 'create_order' %}">Оформить заказ</a></p>
+        <p><a class="create-order" href="{% url 'create_order' %}">Оформить заказ</a></p>
     {% else %}
-        <p>Ваша корзина пуста.</p>
+        <p class="empty-cart">Ваша корзина пуста.</p>
     {% endif %}
+</div>
 {% endblock %}

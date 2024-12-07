@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Мои заказы {% endblock %}
+
+{% block content %}
+<div class="order-list">
+    <h1>Мои заказы</h1>
+    {% if orders %}
+        <ul class="list-group">
+            {% for order in orders %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>Заказ №{{ order.id }}</strong> - {{ order.created_at|date:"d.m.Y H:i" }}
+                        <p>Сумма: {{ order.total_amount }} руб.</p>
+                        <p>Статус: {{ order.get_status_display }}</p>
+                    </div>
+                    <a href="{% url 'order_details' order.id %}" class="btn btn-primary">Детали</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет заказов.</p>
+    {% endif %}
+</div>
+{% endblock %}

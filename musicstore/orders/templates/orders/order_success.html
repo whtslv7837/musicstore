@@ -1,8 +1,9 @@
 {% extends 'main/base.html' %}
 
-{% block title %} Заказ подтвержден {% endblock %}
+{% block title %} Номер заказа {{ order.id }} {% endblock %}
 
 {% block content %}
-    <h1>Ваш заказ успешно оформлен!</h1>
-    <p>Спасибо за покупку!</p>
+<div class="order_details">
+    <p>Заказ успешко оформлен</p>
+</div>
 {% endblock %}
