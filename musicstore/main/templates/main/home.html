@@ -1,8 +1,32 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Главная{% endblock %}
 
 {% block content %}
-<h1>Добро пожаловать на главную страницу нашего магазина!</h1>
-<p>Здесь будет информация о товарах и новостях.</p>
+<div class="main-page">
+
+    <!-- Отзывы -->
+    <section class="testimonials my-5">
+        <h2 class="text-center">Отзывы клиентов</h2>
+        <div class="row justify-content-center">
+            {% for review in reviews %}
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p>“{{ review.text }}”</p>
+                        <p><strong>- {{ review.author }}</strong></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section class="contact bg-dark text-white py-5">
+        <h2 class="text-center">Свяжитесь с нами</h2>
+        <p class="text-center">Мы всегда рады помочь вам!</p>
+        <div class="text-center">
+            <a href="{% url 'contact' %}" class="btn btn-light">Контакты</a>
+        </div>
+    </section>
+</div>
 {% endblock %}
